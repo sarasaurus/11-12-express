@@ -13,6 +13,7 @@ const createTreeMock = () => {
   return new Tree({
     type: faker.lorem.words(10),
     genus: faker.lorem.words(25),
+    height: faker.finance.amount(1, 10),
   }).save();
 };
 
@@ -73,4 +74,69 @@ describe('/api/trees', () => {
         });
     });
   });
+  describe('GET ALL /api/trees', () => {
+
+    // beforeAll(() => {
+    //   const createManyMockTrees = (5) => {
+    //     return Promise.all(new Array(5)
+    //       .fill(0)
+    //       .map(() => createNoteMock()));
+    //   };
+    // });
+    // afterAll(()=>{
+
+    // }));
+    test('should respond with 200 if there are no errors', () => {
+      let noteToTest = null; 
+      // let testTree = null;//  Vinicio - we need to preserve the note because of scope rules
+      return createTreeMock() // Vinicio - test only a GET request
+        .then((tree) => {
+          noteToTest = tree;
+          return superagent.get(`${apiURL}`);
+        })
+        .then((response) => {
+          console.log('GET ALL RESPONSE: ', response);
+          expect(response.status).toEqual(200);
+          expect(response.body.length).toBeTruthy();
+        //   expect(response.body.type).toEqual(noteToTest.type);
+        //   expect(response.body.genus).toEqual(noteToTest.genus);
+        });
+    });
+    // test('should respond with 404 if there is no note to be found', () => {
+    //   return superagent.get(`${apiURL}/THisIsAnInvalidId`)
+    //     .then(Promise.reject) // Vinicio - testing for a failure
+    //     .catch((response) => {
+    //       expect(response.status).toEqual(404);
+    //     });
+    // });
+  });
+  describe('DELETE /api/trees', () => {
+    test('should respond with 204 if there are no errors', () => {
+      let noteToTest = null; 
+      return createTreeMock() 
+        .then((tree) => {
+          noteToTest = tree;
+          return superagent.delete(`${apiURL}/${tree._id}`);
+        })
+        .then((response) => {
+          expect(response.status).toEqual(204);
+          // expect(response.body).toEqual('');
+        });
+    });
+    test('should respond with 404 if there is no note to be found', () => {
+      return superagent.get(`${apiURL}/THisIsAnInvalidId`)
+        .then(Promise.reject) 
+        .catch((response) => {
+          expect(response.status).toEqual(404);
+        });
+    });
+    // test('should respond with 400 if there is no id in the query', () => {
+    //   return superagent.get(`${apiURL}/`)
+    //     .then(Promise.reject) 
+    //     .catch((response) => {
+    //       expect(response.status).toEqual(404);
+    //     });
+    // });
+  });
+  
 });

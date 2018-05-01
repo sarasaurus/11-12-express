@@ -2,6 +2,7 @@
 # Created by https://www.gitignore.io/api/vim,node,macos,linux,windows,webstorm,visualstudiocode
 
 test.env.js
+/db
 
 ### Linux ###
 *~

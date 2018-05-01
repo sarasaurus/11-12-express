@@ -18,6 +18,11 @@ const treeSchema = mongoose.Schema({
     required: true,
     minlength: 10,
   },
+  height: {
+    type: String,
+    required: false,
+    minlength: 1,
+  },
   timestamp: {
     type: Date,
     default: () => new Date(),
