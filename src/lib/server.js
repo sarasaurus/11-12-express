@@ -8,10 +8,8 @@ import treeRoutes from '../route/tree-router';
 const app = express();
 let server = null;
 //---------------------------------------------------------------------------------
-// Vinicio - these routes will be read in-order
-// so it's important that our 404 catch-all is the last one
+// 404 should be last because these are read in order:
 app.use(treeRoutes);
-// Vinicio - manking sure I return a 404 status if I don't have a matching route
 app.all('*', (request, response) => {
   logger.log(logger.INFO, 'Returning a 404 from the catch-all/default route');
   return response.sendStatus(404);
@@ -21,7 +19,6 @@ app.all('*', (request, response) => {
 const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
-      // Vinicio - once I'm here, I know that mongoose is connected
       server = app.listen(process.env.PORT, () => {
         logger.log(logger.INFO, `Server is listening on port ${process.env.PORT}------------------------------------`);
       });
