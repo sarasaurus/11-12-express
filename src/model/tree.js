@@ -3,16 +3,17 @@
 // content of the note
 // timestamp of creation
 
-import mongoose from 'mongoose'; // ES6
+import mongoose from 'mongoose'; 
+import uuid from 'uuid/v4';// ES6
 // const mongoose = require('mongoose'); // Common JS
 
 const treeSchema = mongoose.Schema({
-  title: {
+  type: {
     type: String,
     required: true,
     unique: true,
   },
-  content: {
+  genus: {
     type: String,
     required: true,
     minlength: 10,

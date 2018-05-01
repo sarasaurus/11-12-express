@@ -12,14 +12,14 @@ const noteRouter = new Router();
 
 noteRouter.post('/api/trees', jsonParser, (request, response) => {
   logger.log(logger.INFO, 'POST - processing a request');
-  if (!request.body.title) {
+  if (!request.body.type) {
     logger.log(logger.INFO, 'Responding with a 400 error code');
     return response.sendStatus(400);
   }
   return new Tree(request.body).save()
-    .then((note) => {
+    .then((tree) => {
       logger.log(logger.INFO, 'POST - responding with a 200 status code');
-      return response.json(note);
+      return response.json(tree);
     })
     .catch((error) => {
       logger.log(logger.ERROR, '__POST_ERROR__');

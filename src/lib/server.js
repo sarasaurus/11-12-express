@@ -23,7 +23,7 @@ const startServer = () => {
     .then(() => {
       // Vinicio - once I'm here, I know that mongoose is connected
       server = app.listen(process.env.PORT, () => {
-        logger.log(logger.INFO, `Server is listening on port ${process.env.PORT}`);
+        logger.log(logger.INFO, `Server is listening on port ${process.env.PORT}------------------------------------`);
       });
     });
 };
@@ -32,7 +32,7 @@ const stopServer = () => {
   return mongoose.disconnect()
     .then(() => {
       server.close(() => {
-        logger.log(logger.INFO, 'Server is off');
+        logger.log(logger.INFO, 'Server is off------------------------------------');
       });
     });
 };
